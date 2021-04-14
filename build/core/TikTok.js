@@ -517,7 +517,7 @@ class TikTokScraper extends events_1.EventEmitter {
         const options = {
             uri: this.getApiEndpoint,
             method: 'GET',
-            qs: Object.assign({}, qs),
+            qs: Object.assign(Object.assign({}, qs), { _signature: signature }),
             headers: {
                 cookie: this.getCookies(true),
             },
