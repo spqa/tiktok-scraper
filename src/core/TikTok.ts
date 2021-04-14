@@ -812,7 +812,6 @@ export class TikTokScraper extends EventEmitter {
 
         const urlToSign = `${this.getApiEndpoint}?${query}`;
 
-        // @ts-ignore
         const signature = this.signature ? this.signature : sign(this.headers['user-agent'], urlToSign);
 
         this.signature = '';
@@ -823,6 +822,7 @@ export class TikTokScraper extends EventEmitter {
             method: 'GET',
             qs: {
                 ...qs,
+                _signature: signature,
             },
             headers: {
                 cookie: this.getCookies(true),
