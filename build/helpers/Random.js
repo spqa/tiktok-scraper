@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.makeid = (len) => {
+exports.makeid = void 0;
+const makeid = (len) => {
     let text = '';
     const char_list = '0123456789';
     for (let i = 0; i < len; i += 1) {
@@ -8,3 +9,4 @@ exports.makeid = (len) => {
     }
     return text;
 };
+exports.makeid = makeid;

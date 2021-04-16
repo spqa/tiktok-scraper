@@ -1,1 +1,1 @@
-export declare function sign(userAgent: string, url: string): any;
+export declare function signv2(url: string): Promise<any>;

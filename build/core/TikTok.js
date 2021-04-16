@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TikTokScraper = void 0;
 const request_promise_1 = __importDefault(require("request-promise"));
 const os_1 = require("os");
 const fs_1 = require("fs");
@@ -20,7 +21,7 @@ class TikTokScraper extends events_1.EventEmitter {
         super();
         this.storeValue = '';
         this.verifyFp = verifyFp;
-        this.mainHost = 'https://m.tiktok.com/';
+        this.mainHost = 'https://t.tiktok.com/';
         this.headers = headers;
         this.download = download;
         this.filepath = process.env.SCRAPING_FROM_DOCKER ? '/usr/app/files' : filepath || '';
@@ -511,7 +512,7 @@ class TikTokScraper extends events_1.EventEmitter {
             .map(key => `${key}=${qs[key]}`)
             .join('&');
         const urlToSign = `${this.getApiEndpoint}?${query}`;
-        const signature = this.signature ? this.signature : helpers_1.sign(this.headers['user-agent'], urlToSign);
+        const signature = this.signature ? this.signature : await helpers_1.signv2(urlToSign);
         this.signature = '';
         this.storeValue = this.scrapeType === 'trend' ? 'trend' : qs.id || qs.challengeID || qs.musicID;
         const options = {
@@ -732,7 +733,7 @@ class TikTokScraper extends events_1.EventEmitter {
         if (!this.input) {
             throw `Url is missing`;
         }
-        return helpers_1.sign(this.headers['user-agent'], this.input);
+        return helpers_1.signv2(this.input);
     }
     async getVideoMetadataFromHtml() {
         const options = {
