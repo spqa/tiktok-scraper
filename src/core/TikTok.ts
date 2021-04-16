@@ -13,7 +13,7 @@ import { SocksProxyAgent } from 'socks-proxy-agent';
 import { forEachLimit } from 'async';
 
 import CONST from '../constant';
-import { sign } from '../helpers';
+import { signv2 } from '../helpers';
 
 import {
     PostCollector,
@@ -149,7 +149,7 @@ export class TikTokScraper extends EventEmitter {
     }: TikTokConstructor) {
         super();
         this.verifyFp = verifyFp;
-        this.mainHost = 'https://m.tiktok.com/';
+        this.mainHost = 'https://t.tiktok.com/';
         this.headers = headers;
         this.download = download;
         this.filepath = process.env.SCRAPING_FROM_DOCKER ? '/usr/app/files' : filepath || '';
@@ -812,7 +812,7 @@ export class TikTokScraper extends EventEmitter {
 
         const urlToSign = `${this.getApiEndpoint}?${query}`;
 
-        const signature = this.signature ? this.signature : sign(this.headers['user-agent'], urlToSign);
+        const signature = this.signature ? this.signature : await signv2(urlToSign);
 
         this.signature = '';
         this.storeValue = this.scrapeType === 'trend' ? 'trend' : qs.id || qs.challengeID! || qs.musicID!;
@@ -1080,7 +1080,7 @@ export class TikTokScraper extends EventEmitter {
             throw `Url is missing`;
         }
 
-        return sign(this.headers['user-agent'], this.input);
+        return signv2(this.input);
     }
 
     /**
