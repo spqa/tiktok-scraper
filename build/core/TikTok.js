@@ -639,12 +639,13 @@ class TikTokScraper extends events_1.EventEmitter {
             method: 'GET',
             uri: `https://www.tiktok.com/@${this.input}`,
             json: true,
+            headers: {
+                cookie: 'tt_webid=6888540087794402817; tt_webid_v2=6888540087794402817; s_v_web_id=verify_kgsyrbwt_tLDbPNWk_wiEX_4gbh_9ldY_01cwByO73PHC; tt_csrf_token=mKx8hvIv8lKOFjeMrUUkMCPY; store-idc=alisg; store-country-code=vn; odin_tt=b8e3af133c5344b78368f01057236a91c8d88cba7addc2397c838a0bd6bb5f1e3dc59af51d5e0d8a1502a1714a1fce8f8b5acbc77878dfbaa0fdc209d2e405b7; sid_guard=3879860f669f4d041d616c7bb2cfc2ae%7C1604647362%7C5184000%7CTue%2C+05-Jan-2021+07%3A22%3A42+GMT; csrf_session_id=a071565f5c35423a90467fd8e8461096; ttwid=1%7CJSChh7oAyV4VcAJpUCvkzLchdrX8VcvPG17aR0FsE9E%7C1617590381%7C1f0d22f4af43cb42fa257f528019d394b4642675f57c564128fe371a3f8a144d; MONITOR_WEB_ID=verify_kgsyrbwt_tLDbPNWk_wiEX_4gbh_9ldY_01cwByO73PHC; ak_bmsc=A0721EE6147766255384C9A3AF13BD48764511A791440000F75779604BE52D28~plUoarMKYMlppCULQ5mUz90i5jwyfO32aNLy+xALPWGI1U2vg2EAYqoPAVs/XEG8gKDKAzmvLEsXFdX0m0Ce5GIm6WfX0px09mPGhK+oWsnCAUkm4AAJWY3LvX4Nf/sXIgYsEfIM7yib0AjntmZKcawH5PGRlsEHp6CiMuiJus0JM4nVo9vkI7ZhDw4qFu9wYoHRyY7dagtQbGsCEcKjr7nV1Gmc/m8G/Ppxm3h5o1mTw=; bm_sz=7C0C83F006EF6EBACE5F1F9EAEB02EC7~YAAQpxFFdof6p3R4AQAA1Z//2Qt7wYm4xugsgaYF2lxhV+J7FuxEmrECDVgtZKP1dqL6TnbeOQSqo/Cp1zIbOMG+lfxHqCmZyus8j6e+fjwbEIkZA1BL65sLCBJ25Bg6Y0avLcQ/Yx3qXJeZUGJeL9uzGdXP2vh3blJOM+bUuO7kwRjMvSs9O/lctM5I3tXf; _abck=EE7E5CD5867F43D0FE10F94B82C4BC94~0~YAAQpxFFdoj6p3R4AQAA1Z//2QV817GhwNhMRHuBHu+ojRVNygPKdCJ0MiRfHXyQ/NUobXNPGcqwg8bFexsXlHHLEnPxqFceO8B/tyuef5Mh43H3CMTjJbEy/7HyWZRcftg5cvGgIJunFuekEHtM0jwhrlvU9smp7AoRnxBrKTAmCXovDiCm2TpOf5be2X6Q3ugNDWKPZ6NCqmuyyd8uwlsnFC2SBRvSsxMNmscZD7yLLlu5C/heSIQXc/bFy+xSzasxkcZua+0Z/Hul1Z+1bsmjoyQM7rhwCBS5agPa67sFQdTBQ8tqfElWoQVrowhuIO780a7F9V1Z+4C8B97CZs1CEYtvbuqo2SGWQZ53gX40v5fwigMHSa6j5lGD5qjw0Lr1VkEtZOyqOGfFnzuuQNOzXMYwaA4=~-1~-1~-1; R6kq3TV7=APuk_9l4AQAA3jNQoVr8cyUrnZx5aS5IdkaDiVyvSQUpO4qAye8Wsf4p4ZgA|1|0|f28d5751a5a0b3a6406912aba7e94c8408c5411c; bm_mi=13546683502967A1628843544D23603E~r6qWnlqUv6nt2qo7wK/ePWe1CHJgh1eSTFWYUXt6NCkshXWpjYcpqfTo281JeXQmrxMttOHVrTzV+g/H6qIrm6Rhaws1W4jZXy4wSwISZ8NPB4hBnDSfw93MysYh/39rpJRaiWPhCsC2wgAz20I0f01OKegDMZyrqDZIam1KJN8GtcQkKqAKOk7rPF8K+6YKVOQf9LYDPwVWiHDkdMD+3xN/PbV6QUlaXcfIcmYhfF0=; bm_sv=31B3DD41F6410546A29EE820698A8F31~Z71RiKmXa2rTJfQzi9E8IkUeDFcZhR2xIO3kgz23vx2jPh3YiyTfSMgLnGYQ43hEx3P8a/VTjJjTsPjoQJhxVqSKJa6VRTlcbki3VH5maQ7gdkB9ZbciP+5XRHXCdBQDt/cauhKCiI4iQs2Kx3lqqJjB+StvHzEfGmNZz9sax2w=',
+            },
         };
         try {
             const response = await this.request(options);
-            const breakResponse = response
-                .split(`<script id="__NEXT_DATA__" type="application/json" crossorigin="anonymous">`)[1]
-                .split(`</script>`)[0];
+            const breakResponse = response.split(`crossorigin="anonymous">`)[1].split(`</script>`)[0];
             if (breakResponse) {
                 const userMetadata = JSON.parse(breakResponse);
                 return userMetadata.props.pageProps.userInfo;

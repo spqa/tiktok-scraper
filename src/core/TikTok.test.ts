@@ -3,8 +3,8 @@ import { ScrapeType, Result, RequestQuery, UserMetadata, PostCollector, HashtagM
 import { TikTokScraper } from './TikTok';
 import CONST from '../constant';
 
-jest.mock('request-promise-native');
-jest.mock('request-promise');
+// jest.mock('request-promise-native');
+// jest.mock('request-promise');
 
 describe('TikTok Scraper MODULE(promise): user(valid input data)', () => {
     let instance;
@@ -326,7 +326,7 @@ describe('TikTok Scraper MODULE(promise): getHashtagInfo', () => {
 
 describe('TikTok Scraper MODULE(promise): getUserProfileInfo', () => {
     let instance;
-    const userName = 'tiktok';
+    const userName = 'chaubui';
     beforeAll(() => {
         instance = new TikTokScraper({
             download: false,
